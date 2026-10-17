@@ -1,176 +1,357 @@
-# Online exam cheating detection (YOLO classification)
+<div align="center">
 
-## Setup
+# Code AI Proctor
+### AI-Assisted Exam Integrity · Intelligent Quiz Platform · Adaptive Learning
 
-1. Create a virtual environment and install **CUDA PyTorch** for your GPU, then install dependencies.
+**A self-hosted academic prototype that connects online assessments, webcam-based risk signals, teacher review, and AI-supported learning.**
 
-On Windows, **`pip install torch` from the default PyPI index often installs `+cpu`**, so `torch.cuda.is_available()` stays `False` even with an NVIDIA driver. Always install from the PyTorch CUDA wheel index, and confirm the version string contains **`+cu124`** (or your chosen CUDA flavor), not **`+cpu`**:
+<p>
+<img alt="Project" src="https://img.shields.io/badge/PROJECT-EDTECH%20PROTOTYPE-0F766E?style=flat-square" />
+<img alt="AI" src="https://img.shields.io/badge/VISION-YOLO%20CLASSIFICATION-854DFF?style=flat-square" />
+<img alt="Backend" src="https://img.shields.io/badge/API-FASTAPI-009688?style=flat-square&amp;logo=fastapi&amp;logoColor=white" />
+<img alt="Tutor" src="https://img.shields.io/badge/TUTOR-GEMINI-4285F4?style=flat-square&amp;logo=google&amp;logoColor=white" />
+<img alt="Status" src="https://img.shields.io/badge/STATUS-RESEARCH%20%26%20DEMO-475569?style=flat-square" />
+</p>
 
-```bash
-pip uninstall -y torch torchvision torchaudio
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
-python -c "import torch; print(torch.__version__); print(torch.cuda.is_available())"
-pip install -r requirements.txt
+**[Tech Stack](#technology-stack) · [Features](#platform-capabilities) · [Architecture](#system-architecture) · [Run Locally](#getting-started) · [Safety](#responsible-use--security)**
+
+</div>
+
+---
+
+## Technology Stack
+
+<table>
+<tr>
+<td valign="top" width="33%">
+<h3>AI &amp; Vision</h3>
+<p>
+<img alt="YOLO" src="https://img.shields.io/badge/Ultralytics%20YOLO-111827?style=flat-square" />
+<img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&amp;logo=pytorch&amp;logoColor=white" />
+<img alt="OpenCV" src="https://img.shields.io/badge/OpenCV-5C3EE8?style=flat-square&amp;logo=opencv&amp;logoColor=white" />
+<img alt="NumPy" src="https://img.shields.io/badge/NumPy-013243?style=flat-square&amp;logo=numpy&amp;logoColor=white" />
+</p>
+<sub>Binary image classification, frame/batch inference and candidate alert signals.</sub>
+</td>
+<td valign="top" width="33%">
+<h3>Backend &amp; API</h3>
+<p>
+<img alt="Python" src="https://img.shields.io/badge/Python-3776AB?style=flat-square&amp;logo=python&amp;logoColor=white" />
+<img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&amp;logo=fastapi&amp;logoColor=white" />
+<img alt="Uvicorn" src="https://img.shields.io/badge/Uvicorn-4051B5?style=flat-square" />
+<img alt="Pydantic" src="https://img.shields.io/badge/Pydantic-E92063?style=flat-square&amp;logo=pydantic&amp;logoColor=white" />
+</p>
+<sub>Server-side inference, account/quiz workflows, validation and JSON APIs.</sub>
+</td>
+<td valign="top" width="33%">
+<h3>Web Platform</h3>
+<p>
+<img alt="HTML" src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&amp;logo=html5&amp;logoColor=white" />
+<img alt="CSS" src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&amp;logo=css3&amp;logoColor=white" />
+<img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&amp;logo=javascript&amp;logoColor=111827" />
+<img alt="Jinja2" src="https://img.shields.io/badge/Jinja2-B41717?style=flat-square" />
+</p>
+<sub>Organization, teacher, student and quiz-facing browser experiences.</sub>
+</td>
+</tr>
+<tr>
+<td valign="top" width="33%">
+<h3>Database</h3>
+<p>
+<img alt="SQLAlchemy" src="https://img.shields.io/badge/SQLAlchemy-D71F00?style=flat-square" />
+<img alt="SQLite" src="https://img.shields.io/badge/SQLite-003B57?style=flat-square&amp;logo=sqlite&amp;logoColor=white" />
+<img alt="MySQL" src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&amp;logo=mysql&amp;logoColor=white" />
+<img alt="SQL Server" src="https://img.shields.io/badge/SQL%20Server-CC2927?style=flat-square" />
+</p>
+<sub>Optional persistent accounts, classes, quiz attempts, incidents and grades.</sub>
+</td>
+<td valign="top" width="33%">
+<h3>Generative AI</h3>
+<p>
+<img alt="Gemini" src="https://img.shields.io/badge/Google%20Gemini-4285F4?style=flat-square&amp;logo=google&amp;logoColor=white" />
+<img alt="PDF" src="https://img.shields.io/badge/PyPDF2-A21CAF?style=flat-square" />
+<img alt="AI tutor" src="https://img.shields.io/badge/AI%20Tutor-8B5CF6?style=flat-square" />
+</p>
+<sub>PDF-informed explanations, question practice and teacher insights.</sub>
+</td>
+<td valign="top" width="33%">
+<h3>Tooling &amp; Extensions</h3>
+<p>
+<img alt="Docker" src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&amp;logo=docker&amp;logoColor=white" />
+<img alt="Chrome" src="https://img.shields.io/badge/Chrome%20MV3-4285F4?style=flat-square&amp;logo=googlechrome&amp;logoColor=white" />
+<img alt="CUDA" src="https://img.shields.io/badge/CUDA-76B900?style=flat-square&amp;logo=nvidia&amp;logoColor=white" />
+</p>
+<sub>Container configuration, experimental extension shell and optional GPU training.</sub>
+</td>
+</tr>
+</table>
+
+## Platform Capabilities
+
+<table>
+<tr>
+<td valign="top" width="25%"><strong>Organization Management</strong><br/><sub>Create and manage institutional teacher/student accounts.</sub></td>
+<td valign="top" width="25%"><strong>Assessment Workspace</strong><br/><sub>Classes, quizzes, questions, timed attempts and grading.</sub></td>
+<td valign="top" width="25%"><strong>AI-Assisted Proctoring</strong><br/><sub>Classify webcam frames and surface candidate risk alerts.</sub></td>
+<td valign="top" width="25%"><strong>Learning Feedback</strong><br/><sub>Quiz review, PDF-based assistance and practice generation.</sub></td>
+</tr>
+</table>
+
+> [!IMPORTANT]
+> **Human review is essential.** The image model produces a probability for a training-set label ("cheating" or "normal"). This is **not proof of academic misconduct**, identity authentication or a validated surveillance decision. Automated flags must never be used as the sole basis for disciplinary action. No independently verified recognition accuracy, fairness analysis or real-world false-positive rate is provided in this repository.
+
+## Product Overview
+
+Code AI Proctor (internally named **AI Observer**) combines a browser-based examination platform with a Python inference service. Institutions can create accounts, instructors can organize classes and quizzes, and students can take timed online assessments.
+
+During an assessment, the browser can request webcam permission through `getUserMedia` and send images to the local FastAPI server. A trained **Ultralytics YOLO classification checkpoint** predicts class probabilities. The application can generate alerts and store incident-related records for teacher review when a database is configured.
+
+A separate Gemini integration offers study-oriented feedback after quizzes. It extracts text from teacher-provided PDF lectures and uses that material in prompts to generate explanations and additional practice questions. **This is direct PDF-text context assembly, not a published vector-database RAG pipeline**.
+
+## System Architecture
+
+```mermaid
+flowchart TD
+  ORG["Organization Portal"] --> WEB["FastAPI + Jinja2 / JavaScript"]
+  TEA["Teacher Dashboard"] --> WEB
+  STU["Student / Quiz Browser"] --> WEB
+  STU -->|Camera snapshots with permission| API["Prediction API"]
+  API --> DET["YOLO image classifier<br/>PyTorch / Ultralytics"]
+  DET --> SCORE{"Risk score >= configured threshold?"}
+  SCORE -->|Yes| FLAG["Candidate alert + review snapshot"]
+  SCORE -->|No| NORMAL["No model alert"]
+  FLAG --> WEB
+  WEB --> DB[("SQLAlchemy<br/>SQLite / MySQL / SQL Server")]
+  FLAG --> DB
+  STU --> REVIEW["Completed-quiz review"]
+  REVIEW --> TUTOR["PDF extraction + Gemini<br/>optional AI tutoring"]
+  TUTOR --> WEB
 ```
 
-The CUDA 12.4 wheel is typically compatible with newer drivers (your `nvidia-smi` “CUDA Version” can be higher). Adjust the index URL if you use a different wheel line from [PyTorch install](https://pytorch.org/get-started/locally/).
+**Architecture boundaries:** the model runs in the **Python backend**, not within browser JavaScript; the UI submits images via HTTP. Database-backed registration, quiz storage and incident history require a valid `DB_CONNECTION_STRING`. The basic prediction endpoint can operate without database persistence when weights are available.
 
-**If `import torch` fails** after an interrupted download, re-run only the `pip install torch torchvision --index-url ...` line (the wheel is large, ~2.5 GB).
+### Model inference pipeline
 
-**If pip prints `No space left on device` / `[Errno 28]`:** the CUDA wheel needs several gigabytes free on the drive where Python and pip cache live (often `C:`). Aim for **at least ~5 GB free** before installing. Free space (Disk Cleanup, empty Recycle Bin, move large files), optionally clear pip cache: `pip cache purge`, then install again.
+1. The browser uploads image frames to `POST /api/predict` or a window of frames to `POST /api/predict_batch`.
+2. Pillow decodes the image; NumPy arrays are passed to `CheatingDetector`.
+3. The detector center-crops nonsquare image arrays and runs an Ultralytics **classification** model.
+4. Per-class probabilities are returned; `PROCTOR_CHEAT_THRESHOLD` is compared against the `cheating` class probability.
+5. Batch prediction averages per-frame cheating probabilities and can return the highest-scoring submitted snapshot for review when flagged.
+6. When the database is available, the prediction or subsequent incident report can be persisted.
 
-**Quick check:** `python -c "import torch; print(torch.__version__); print(torch.cuda.is_available())"` — you want a version like `2.x.x+cu124` and `True`, not `+cpu` and `False`.
+A high model score reflects its learned dataset categories, **not a causal determination about student behavior**. Batch averaging can reduce some volatility but does not establish robust anti-cheating accuracy.
 
-2. Dataset: `online exam cheating detection.v15i.folder/` (Roboflow export). `Unlabeled` images were moved to `_unlabeled_review/` so training uses two classes only.
+## Exam & Learning Workflow
 
-## Train (GPU required)
+**Institution → Teacher → Student → Assessment → Review**
 
-```bash
-python train_cheating_yolo.py
+1. **Institution:** sign up, log in and provision teacher or student accounts.
+2. **Teacher:** create a class, structure course content, upload lecture PDFs, create quizzes and questions, generate a shareable exam link.
+3. **Student:** log in, change the initial password as needed, enroll in a class, start a permitted quiz and submit responses.
+4. **AI proctor:** with camera permission, classify selected frames; the application can report suspected events to a teacher.
+5. **Review:** view grades, incident notifications and appeals; export grade data.
+6. **AI tutoring:** review weak or overtime answers, use extracted lecture text to request explanations or generate practice questions through Gemini.
+
+The system includes **organization, teacher, student, quiz and review templates**, plus static CSS and JavaScript. The separate `extension/` directory contains an early Chrome Manifest V3 scaffold (focus/blur logging and heartbeat handling), **not a completed browser-wide monitoring or enforcement system**.
+
+## Repository Structure
+
+```text
+code-ai-proctor/
+├── backend/
+│   ├── main.py                       # FastAPI app, routes and inference API
+│   ├── core/security.py              # bcrypt hashing helpers
+│   ├── services/ai_tutor.py          # Gemini/PDF-based tutoring workflows
+│   ├── templates/                    # Organization, teacher, student, quiz and review pages
+│   └── static/                       # Browser CSS and JavaScript
+├── extension/                         # Experimental Chrome MV3 scaffold
+├── cheating_detector.py              # YOLO classification and batch aggregation
+├── train_cheating_yolo.py            # GPU-oriented classification training
+├── prepare_demo_weights.py           # Synthetic demo checkpoint generator
+├── model_paths.py                    # Weight selection and discovery
+├── database.py                       # SQLAlchemy models and persistence
+├── cheating_dataset.yaml             # Dataset path/config reference
+├── weights/.gitkeep                   # Weights directory (real weights not published)
+├── requirements.txt
+├── .env.example
+├── Dockerfile
+├── docker-compose.yml
+├── project_documentation.md
+└── README.md
 ```
 
-Optional: `python train_cheating_yolo.py --epochs 50 --model yolo11n-cls.pt`
-Low-memory GPU/Windows-safe example:
-`python train_cheating_yolo.py --batch 8 --workers 0`
+### Backend data model
 
-Note: Ultralytics classification expects a dataset **directory**. This script accepts either:
-- `--data cheating_dataset.yaml` (default; auto-resolves to dataset folder), or
-- `--data "online exam cheating detection.v15i.folder"`
+The SQLAlchemy models cover application users, organizations, teachers, students, classes, class enrollment, quizzes, questions, attempts, answers, answer timing, candidate cheating incidents and recorded predictions. See [database.py](database.py) for actual fields, relationships and backend-specific schema handling.
 
-Weights are written under `runs/classify/`.
+Database support includes **SQLite**, **MySQL** through PyMySQL, and **SQL Server/Azure SQL** through pyodbc. It is optional for isolated inference, but **required for account management and the quiz platform**.
 
-If you see `WinError 1455` (`paging file is too small`) during training, keep `--workers 0` and lower `--batch` (e.g. `4`), then retry. You can also increase the Windows pagefile size.
+## Getting Started
 
-### Quick demo weights (try the web quiz camera)
+### Requirements
 
-Your Roboflow export folder in this repo may be empty until you add images. To still **run inference end-to-end**, generate a tiny synthetic `cheating` / `normal` dataset, fine-tune `yolo11n-cls` for a few epochs, and copy weights to **`weights/best.pt`**:
+- Python with a virtual environment and supported versions of the packages in [requirements.txt](requirements.txt).
+- A CPU or compatible NVIDIA GPU; model **training** in `train_cheating_yolo.py` requires CUDA, while the inference engine may use CPU.
+- A classification checkpoint trained for `cheating` and `normal`, or synthetic demo weights **only for integration testing**.
+- For the full portals: a configured SQL database; for tutoring: an optional Gemini API key.
+- A webcam and browser camera permission for live testing.
 
-```bash
+### 1. Clone and install
+
+```powershell
+git clone https://github.com/AdhamElsayedAI/code-ai-proctor.git
+cd code-ai-proctor
+python -m venv .venv
+.\\.venv\\Scripts\\Activate.ps1
+python -m pip install -r requirements.txt
+```
+
+On Windows PowerShell, if activation is blocked, use `.\\.venv\\Scripts\\python.exe` in place of `python`. **PyTorch is intentionally not pinned in the requirements file.** Select a compatible CPU/CUDA installation command from the [official PyTorch guide](https://pytorch.org/get-started/locally/) before importing or running Ultralytics. Do not assume that a default wheel enables CUDA.
+
+### 2. Configure your local environment
+
+Copy `.env.example` to `.env` and edit it for a **local development environment**:
+
+```dotenv
+DB_CONNECTION_STRING=sqlite:///./ai_observer.db
+PROCTOR_DEVICE=cpu
+PROCTOR_CHEAT_THRESHOLD=0.7
+PROCTOR_BATCH_SIZE=3
+# PROCTOR_API_KEY=your-private-dev-key
+# PROCTOR_MODEL_PATH=weights/best.pt
+# GEMINI_API_KEY=your-private-key
+```
+
+This example uses **SQLite** to avoid a separate database server. The supplied `.env.example` also contains alternative XAMPP/MySQL and SQL Server configuration. Never commit `.env` or database files.
+
+**API-key caution:** enabling `PROCTOR_API_KEY` requires clients to send the key in `X-API-Key` on prediction requests; do not embed a private server key into publicly distributed browser code.
+
+### 3. Supply a suitable classification checkpoint
+
+The repository's `weights/` directory is intentionally empty apart from `.gitkeep`. Place a compatible, consented/trained checkpoint at `weights/best.pt`, or set `PROCTOR_MODEL_PATH`.
+
+```powershell
+# Real dataset training: CUDA-capable system and dataset required
+python train_cheating_yolo.py --data "path/to/dataset" --epochs 50 --batch 8 --workers 0
+```
+
+The training script defaults to Ultralytics `yolo11n-cls.pt` and writes results to `runs/classify/`. `model_paths.py` prioritizes some historical `train4` paths when those weights exist, and otherwise discovers other saved runs or uses `weights/best.pt`.
+
+**For interface wiring only:**
+
+```powershell
 python prepare_demo_weights.py
 ```
 
-The first run downloads `yolo11n-cls.pt` from Ultralytics (needs internet). Uses **CUDA if available**, otherwise CPU (slower). Then start `uvicorn` — the API auto-resolves **`weights/best.pt`** or the newest `runs/**/weights/best.pt` unless `PROCTOR_MODEL_PATH` is set.
+This creates a checkpoint from a **tiny synthetic dataset**. It can help test whether requests reach the model, but its predictions are **not evidence of reliable cheating detection**.
 
-**Your Roboflow `train4` run:** weight resolution **always tries `train4` first** (`best.pt`, then `last.pt`, in both nested and flat Ultralytics layouts), before `weights/best.pt`, other runs, or `demo_quiz`. Set `PROCTOR_MODEL_PATH` only if you want to override that. If `train4` has no `weights/` folder, restore `best.pt` from backup or re-run `python train_cheating_yolo.py`.
+### 4. Start the local application
 
-## Inference (Python)
-
-```python
-from cheating_detector import CheatingDetector
-
-d = CheatingDetector("runs/classify/train/weights/best.pt")
-print(d.predict("path/to/image.jpg"))
+```powershell
+python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000
 ```
 
-## Live webcam test
+Open **http://127.0.0.1:8000/** for the portal, **http://127.0.0.1:8000/docs** for FastAPI OpenAPI docs, and **http://127.0.0.1:8000/health** for model/database readiness. A running web server does not guarantee that valid model weights or database connectivity are present; confirm those separately.
 
-Uses your trained `best.pt` and the default webcam (`--camera 0`). Press **Q** in the video window to quit.
+### 5. Try the prediction API
+
+For an environment with weights loaded and no API key set:
 
 ```bash
-python webcam_proctor.py
+curl -X POST "http://127.0.0.1:8000/api/predict" \
+  -F "file=@sample_frame.jpg"
 ```
 
-If weights are not found automatically, pass the path Ultralytics printed at the end of training, e.g.:
+If `PROCTOR_API_KEY` is configured, add the `X-API-Key` header. The response provides the model's label, confidence, probability map, `cheat_probability` and boolean `alert`. Use `POST /api/predict_batch` with repeated `files` fields for multi-frame average scoring, subject to the configured batch size.
 
-```bash
-python webcam_proctor.py --weights runs\classify\train2\weights\best.pt
-```
+The project is not a hosted inference service. **All model execution occurs on the Python host running FastAPI.**
 
-On a 4GB GPU, increase `--stride` so inference runs less often (e.g. `--stride 5`). Use `--device cpu` if the GPU is busy.
+## API Overview
 
-If OpenCV says **`imshow` / `cvShowImage` is not implemented**, you usually have **`opencv-python-headless`**. Fix:
+| Route | Role |
+| --- | --- |
+| `GET /health`, `GET /api/meta` | Readiness and service metadata |
+| `POST /api/org/signup`, `POST /api/org/login` | Institution registration and login |
+| `POST /api/org/teachers`, `POST /api/org/students` | Account provisioning |
+| `POST /api/teacher/classes`, `POST /api/teacher/quizzes` | Class and quiz authoring |
+| `POST /api/teacher/classes/{class_id}/upload_lecture` | Lecture upload for course context |
+| `POST /api/student/login`, `POST /api/student/join-class` | Student account and enrollment |
+| `GET /api/quiz/{share_token}` | Retrieve shared assessment |
+| `POST /api/quiz/{share_token}/start`, `POST /api/quiz/answer` | Quiz attempt lifecycle |
+| `POST /api/quiz/attempt/{attempt_id}/complete` | Finish assessment |
+| `POST /api/predict`, `POST /api/predict_batch` | Single-frame and batch model inference |
+| `POST /api/cheating/report` | Report an incident for review |
+| `POST /api/student/quiz/{attempt_id}/review` | Completed-quiz review and Gemini explanations |
+| `POST /api/student/quiz/{attempt_id}/practice` | AI-generated practice questions |
+| `POST /api/teacher/quiz/{quiz_id}/insights` | Teacher-side Gemini quiz insights |
 
-```bash
-python -m pip uninstall -y opencv-python-headless
-python -m pip install opencv-python
-```
+See the source in [backend/main.py](backend/main.py) for exact request schemas, authentication inputs and responses. Some routes are disabled without a database connection, and some AI tutoring calls additionally require a Gemini key.
 
-Always use **`python -m pip`** so packages install into the same Python you run scripts with (plain `pip` can target a different install).
+## Configuration
 
-If you see **`ModuleNotFoundError: No module named 'cv2'`** even though `pip` says `opencv-python` is installed, the `cv2` files are missing — reinstall:
+| Setting | Description |
+| --- | --- |
+| `DB_CONNECTION_STRING` | SQLite, MySQL or SQL Server database URL/connection string |
+| `PROCTOR_MODEL_PATH` | Optional explicit trained checkpoint |
+| `PROCTOR_DEVICE` | Model device, such as `cpu` or `cuda:0` |
+| `PROCTOR_API_KEY` | Optional prediction API shared secret |
+| `PROCTOR_CHEAT_THRESHOLD` | Alert threshold; code default `0.7` |
+| `PROCTOR_BATCH_SIZE` | Maximum images accepted per batch; code default `3` |
+| `CORS_ORIGINS` | Allowed browser origins, localhost by default |
+| `GEMINI_API_KEY` | Optional key for AI tutor and quiz insights |
+| `GEMINI_MODEL` | Optional Gemini model selection (default in tutor source: `gemini-2.5-flash`) |
 
-```bash
-python -m pip uninstall -y opencv-python
-python -m pip install --no-cache-dir opencv-python
-python -c "import cv2; print(cv2.__version__)"
-```
+The **code** is authoritative where defaults in older documentation or `.env.example` differ.
 
-Or skip OpenCV windows and use the built-in Tk viewer: `python webcam_proctor.py --gui tk` (still requires a working `cv2` for the camera).
+## Responsible Use & Security
 
-## Web app + API
+Online exam proctoring processes sensitive camera, behavioral, academic and personal information. Treat this implementation as **a supervised research prototype**, not production-ready remote proctoring.
 
-Set `PROCTOR_API_KEY` (optional but recommended). Set `PROCTOR_MODEL_PATH` only if you want an explicit file; otherwise the app searches `weights/best.pt` then the newest `runs/**/weights/best.pt`.
+- Require explicit informed consent, a clear review/appeal process and an accessible alternative for students unable to use camera-based monitoring.
+- Do not penalize a student solely because a model raises an alert; clothing, gaze, lighting, background and dataset bias can affect results.
+- The application has password hashing, but **does not implement a complete modern authenticated session/role-based security model**. Some endpoints take repeated credentials in request bodies, and legacy GET routes can expose credentials in URL query strings.
+- The browser portal may store credentials in `sessionStorage` in localhost demo flows; do not use that as production authentication.
+- Uploaded files are served under a mounted static `/uploads` path. Restrict access, retention and distribution of face images, snapshots and lecture content before involving real participants.
+- Treat lecture PDF content sent to Gemini as data shared with an external service; obtain appropriate authorization and avoid confidential student or faculty documents without approval.
+- A scaffold Chrome extension exists, but its all-sites permissions and logging do not constitute an audited exam-lockdown browser.
+- API-key protection is optional and applies to the prediction routes; **it is not a complete authorization layer** for the rest of the platform.
+- Configure transport encryption, access controls, audit trails, deletion policies, rate limits and independent validation before deployment beyond an isolated environment.
 
-```bash
-set PROCTOR_API_KEY=your-secret
-uvicorn backend.main:app --host 0.0.0.0 --port 8000
-```
+## Testing & Known Limitations
 
-Open http://127.0.0.1:8000/ for the UI. POST `/api/predict` with multipart field `file` and header `X-API-Key` when configured.
+There is no checked-in automated test suite, verified CI report, trustworthy held-out evaluation summary or reproducible deployed demo evidence in the present source tree. **Do not quote unverified model accuracy percentages or treat threshold values as measured performance.**
 
-### LMS integration
+The following are particularly important for anyone reproducing the project:
 
-- **Simple**: Link or iframe `https://your-host/` from Moodle/Canvas/Blackboard.
-- **LTI 1.3**: Use a separate LTI tool or middleware that launches your app with signed context; this repo exposes a stable JSON API at `/api/predict` for that integration.
+- The published `Dockerfile` currently starts `proctor_app:app`, but the checked-in application entry point is `backend.main:app`. Docker Compose should be **reviewed and corrected before relying on it**; local Uvicorn is the documented starting point.
+- Trained real-data weights and local Roboflow dataset images are not included. They must be supplied separately.
+- The synthetic demo checkpoint is for **software integration**, not scientific model evaluation.
+- The project includes optional Gemini tutoring but does not publish a vector index, retriever, reranker or independently assessed answer grounding.
+- A Chrome extension manifest and short scripts are present, but not a complete integrated proctoring product.
+- Accuracy, calibration, false positives across demographic groups, model robustness, GPU latency and end-to-end load capacity remain to be measured.
 
-## Azure SQL / database (optional)
+## Roadmap
 
-The API can persist **registered users** and **prediction audit rows** when `DB_CONNECTION_STRING` is set.
+- [ ] Verify the organization → quiz → proctoring → incident review journey using a privacy-safe test dataset.
+- [ ] Publish reproducible training/evaluation with model calibration and subgroup analysis.
+- [ ] Complete authenticated sessions, role-based authorization and protected file delivery.
+- [ ] Fix Docker entrypoint and provide a tested deployment recipe.
+- [ ] Add test coverage for API, database workflows, image validation and browser interactions.
+- [ ] Improve AI tutor source attribution and validate generated explanations against uploaded lectures.
+- [ ] Establish consent, retention, review and appeal policies before any real student pilot.
 
-1. Install ODBC **Driver 18 for SQL Server** on the machine that runs the app ([Microsoft ODBC driver](https://learn.microsoft.com/sql/connect/odbc/download-odbc-driver-for-sql-server)).
-2. Install Python deps: `python -m pip install -r requirements.txt` (includes `sqlalchemy`, `pyodbc`, `bcrypt`).
-3. Set the environment variable **only on the server** (never commit it). See [`.env.example`](.env.example) for the shape of the value.
-4. Start the app: on startup it runs `CREATE TABLE` for `app_users` and `proctor_predictions` if they do not exist.
-5. Check `GET /health`: `database` is `connected`, `disabled`, `error`, or `misconfigured` (env set but connection/schema init failed — see `database_error`).
+## Additional Documentation
 
-**If you see `IM002` / “Data source name not found”:** Windows does not have the ODBC driver named in your string (often **ODBC Driver 18 for SQL Server**). Install it from Microsoft, then confirm:
+For earlier implementation notes, see [project_documentation.md](project_documentation.md). Some legacy references and proposed components in that document may not exist in the current repository; **the checked-in source is the reference for supported functionality**.
 
-```bash
-python -c "import pyodbc; print(pyodbc.drivers())"
-```
+**Repository:** [AdhamElsayedAI / code-ai-proctor](https://github.com/AdhamElsayedAI/code-ai-proctor)
 
-You should see `ODBC Driver 18 for SQL Server` in the list. If you only have **17**, change `Driver={...}` in `DB_CONNECTION_STRING` to match.
+---
 
-**Azure TLS note:** if you still cannot connect after the driver is installed, try `Encrypt=yes` with `TrustServerCertificate=yes` only for isolated testing (less strict than `no`); prefer proper certificates in production.
+<div align="center">
 
-**Endpoints**
+**AI-assisted exam integrity should support human judgment — never replace it.**
 
-- `POST /api/register` — JSON body `{"email":"...","password":"...","display_name":null}` creates a user (bcrypt password hash).
-- `POST /api/login` — JSON body `{"email":"...","password":"..."}` verifies credentials (returns `user_id`; add JWT/session later if you need full auth).
-- `POST /api/predict` — unchanged response; if DB is configured, each call also inserts a row. Optional headers:
-  - `X-User-Email` — if it matches a registered user, `user_id` is stored on the row.
-  - `X-Client-Reference` — optional LMS/exam id string (max 256 chars).
+<sub>Code AI Proctor · Computer Vision · Education Technology · Responsible AI</sub>
 
-**Security:** database passwords must not live in source control. If a password was shared in chat or logs, **rotate it** in Azure and update the server environment only.
-
-## Environment variables
-
-| Variable | Description |
-|----------|-------------|
-| `PROCTOR_MODEL_PATH` | Optional explicit path to `best.pt`. If unset: `weights/best.pt`, else newest `runs/**/weights/best.pt`, else legacy `runs/classify/train/weights/best.pt` |
-| `PROCTOR_DEVICE` | `cuda`, `cuda:0`, or `cpu` (default: cuda if available) |
-| `PROCTOR_API_KEY` | If set, required as `X-API-Key` for `/api/predict` |
-| `PROCTOR_CHEAT_THRESHOLD` | Probability above which label is treated as cheating alert (default `0.5`) |
-| `DB_CONNECTION_STRING` | Optional ODBC connection string for Azure SQL / SQL Server |
-
-## Web portal (organization + student + live quiz)
-
-The UI is a normal web page served by FastAPI. Start the API on the machine where your trained weights live:
-
-```bash
-uvicorn backend.main:app --host 127.0.0.1 --port 8000
-```
-
-Then open [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in a browser. The **Quiz & camera** tab captures frames with `getUserMedia` and POSTs them to `/api/predict` on that same host, so **YOLO inference runs in your local Python process** (not a hosted “cloud model” API). Training is still done separately with `train_cheating_yolo.py` on your machine.
-
-Static assets live under `static/`; the main template is `templates/exam_portal.html`. The minimal single-file upload UI remains at `/upload`.
-
-**API flow (same as before, now driven from the portal):**
-
-1. Organization: `POST /api/org/signup`, `POST /api/org/login`
-2. Organization creates accounts: `POST /api/org/teachers`, `POST /api/org/students`
-3. List recent accounts: **`POST /api/org/accounts`** with JSON `{"org_email","org_password"}` (GET with query parameters still exists for compatibility but avoid it for real passwords).
-4. Student: `POST /api/student/login`, first login `POST /api/student/change-password`, face `POST /api/student/face`, dashboard **`POST /api/student/dashboard`** with `{"email","password"}` (GET with query string still supported but discouraged).
-5. Live proctoring: `POST /api/predict` — optional `X-API-Key` if `PROCTOR_API_KEY` is set; alert when `cheat_probability >= PROCTOR_CHEAT_THRESHOLD` (default `0.5`; set `PROCTOR_CHEAT_THRESHOLD=0.7` if you want alerts only at 0.7 and up). The portal shows thumbnails when the server returns `alert: true`.
-
-**Demo note:** the portal stores organization and student passwords in `sessionStorage` for convenience on localhost only; do not rely on that for production authentication.
+</div>
